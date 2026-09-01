@@ -1,0 +1,21 @@
+{
+  "name": "ldrs-app",
+  "version": "1.0.0",
+  "description": "Long-Distance Couple Movie Date App",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "install:all": "npm install && cd server && npm install && cd ../client && npm install",
+    "build": "cd client && npm run build"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express-rate-limit": "^8.7.0",
+    "mongoose": "^9.9.4"
+  }
+}
