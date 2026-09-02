@@ -65,7 +65,7 @@ const io = new Server(httpServer, {
 app.use(helmet({ crossOriginEmbedderPolicy: false }));
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: corsOrigin,
     credentials: true,
   })
 );
