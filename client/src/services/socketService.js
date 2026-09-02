@@ -9,9 +9,10 @@ let socket = null;
  */
 export const initSocket = (token) => {
   if (socket?.connected) return socket;
-
-  const socketUrl = import.meta.env.VITE_SOCKET_URL || import.meta.env.VITE_API_URL || '/';
-
+  const socketUrl =
+    import.meta.env.VITE_SOCKET_URL ||
+    import.meta.env.VITE_API_URL?.replace(/\/api\/?$/, '') ||
+    window.location.origin;
   socket = io(socketUrl, {
     auth: { token },
     transports: ['websocket', 'polling'],
