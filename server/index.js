@@ -32,18 +32,29 @@ httpServer.headersTimeout = 15 * 60 * 1000 + 5000;
 const clientUrls = process.env.CLIENT_URL
   ? process.env.CLIENT_URL.split(',').map((url) => url.trim())
   : [];
-
-const allowedOrigins = Array.from(new Set([
+const allowedOrigins = [
   ...clientUrls,
   'http://localhost:5174',
   'http://localhost:5173',
   'http://localhost:3000',
-].filter(Boolean)));
+];
 
+const corsOrigin = (origin, callback) => {
+  if (!origin) return callback(null, true);
+
+  if (
+    allowedOrigins.includes(origin) ||
+    /^https:\/\/ldrs(-[a-z0-9-]+)?\.vercel\.app$/.test(origin)
+  ) {
+    return callback(null, true);
+  }
+
+  callback(new Error('Not allowed by CORS'));
+};
 // ─── Socket.io ───────────────────────────────────────────────────────────────
 const io = new Server(httpServer, {
   cors: {
-    origin: allowedOrigins,
+    origin: corsOrigin,
     methods: ['GET', 'POST'],
     credentials: true,
   },
